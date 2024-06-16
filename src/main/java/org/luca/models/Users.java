@@ -1,14 +1,13 @@
 package org.luca.models;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -23,7 +22,17 @@ public class Users {
     private String surname;
     private String mail;
     private String password;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<House> houses = new ArrayList<>();
 
+    public Users(Long id, String name, String surname, String mail, String password, List<House> houses) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.mail = mail;
+        this.password = password;
+        this.houses = houses;
+    }
 
     public Users(Long id, String name, String surname, String mail, String password) {
         this.id = id;
@@ -33,6 +42,11 @@ public class Users {
         this.password = password;
     }
 
-
+//    public Users( String name, String surname, String mail) {
+//        this.name = name;
+//        this.surname = surname;
+//        this.mail = mail;
+//
+//    }
 
 }
