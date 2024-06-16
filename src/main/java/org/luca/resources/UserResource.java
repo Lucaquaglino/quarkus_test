@@ -27,11 +27,11 @@ public class UserResource {
 
 
 
-    @POST
+    @POST@Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
 
-    public Response createUser(Users user) {
+    public Response createUser2(Users user) {
 userService.saveUser(user);
 return Response.ok().build();
     }
@@ -48,23 +48,22 @@ return Response.ok().build();
         return Response.ok().build();
     }
 
-//    @POST
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Consumes(MediaType.APPLICATION_JSON)
-//
-//    public Response createUser(UserDTO userDTO)  {
-//
-//        Users user = new Users();
-//
-//        try {
-//            BeanUtils.copyProperties(user, userDTO);
-//            userService.saveUser(user);
-//        }catch (Exception e) {
-//          return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-//        }
-//
-//        return Response.status(Response.Status.CREATED).entity(userDTO).build();
-//    }
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createUser(UserDTO userDTO)  {
+
+        Users user = new Users();
+
+        try {
+            BeanUtils.copyProperties(user, userDTO);
+            userService.saveUser(user);
+        }catch (Exception e) {
+          return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+
+        return Response.status(Response.Status.CREATED).entity(userDTO).build();
+    }
 
 
 
@@ -96,7 +95,12 @@ return Response.ok().build();
 
 
 
-
+    @DELETE
+    @Path("/delete/{id}")
+    public Response deleteUser(@PathParam("id") Long id) {
+        userService.deleteUserById(id);
+        return Response.noContent().build();
+    }
 
 
 

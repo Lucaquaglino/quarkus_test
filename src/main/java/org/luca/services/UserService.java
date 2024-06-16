@@ -39,6 +39,18 @@ public class UserService {
 
     }
 
+
+
+
+    @Transactional
+    public void deleteUserById(Long id) {
+        User user = em.find(User.class, id);
+        if (user != null) {
+            em.remove(user);
+        }
+    }
+
+
     @Transactional
     public void saveHouse(House house) {
         em.persist(house);
@@ -59,7 +71,9 @@ public class UserService {
         Root<House> houseRoot = cq.from(House.class);
         cq.where(houseRoot.get("id").in(houseIds));
         List<House> houses = em.createQuery(cq).getResultList();
-        user.setHouses(houses);
+        for(House house : houses) {
+            user.addHouse(house);
+        }
         return em.merge(user);
 
     }

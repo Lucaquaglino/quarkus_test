@@ -25,6 +25,16 @@ public class Users {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<House> houses = new ArrayList<>();
 
+
+    public void addHouse(House house) {
+        this.houses.add(house);
+    }
+
+    public void removeHouse(House house) {
+        this.houses.remove(house);
+    }
+
+
     public Users(Long id, String name, String surname, String mail, String password, List<House> houses) {
         this.id = id;
         this.name = name;
