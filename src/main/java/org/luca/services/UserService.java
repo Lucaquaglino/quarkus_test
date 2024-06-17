@@ -11,7 +11,12 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import org.luca.models.House;
+import org.luca.models.OrderDTO;
+import org.luca.models.UserDTO;
 import org.luca.models.Users;
 
 
@@ -27,6 +32,29 @@ public class UserService {
 
     @Inject
     EntityManager em;
+
+
+
+
+
+
+    @Inject
+    OrderServiceClient orderServiceClient;
+
+    @GET
+    @Path("/{userId}/orders")
+    public List<OrderDTO> getOrdersForUser(@PathParam("userId") Long userId) {
+        // Esegui la chiamata HTTP al servizio OrderService per ottenere gli ordini dell'utente
+        return orderServiceClient.getOrdersByUserId(userId);
+    }
+
+
+
+
+
+
+
+
 
     @Transactional
     public void saveUser(Users user) {
